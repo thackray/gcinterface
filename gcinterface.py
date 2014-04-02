@@ -12,6 +12,8 @@ class InputGeos(gcfileobj):
           # self.filename is set
           return
      def open_from_template(self, template_filename):
+          template = open(template_filename, 'r').read()
+          # string replace TEMPLATEVARIABLES in the file
           return
      def set_dates(self, run_start_date, run_end_date):
           self.run_start_date = run_start_date
