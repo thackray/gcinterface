@@ -4,11 +4,10 @@ import os, shutil
 #from gchem import gchem
 
 class GCFile(object):
-     def __init__(self, filename):
-          self.filename = filename
+     def __init__(self,):
           self.content = ''
-     def write(self,):
-          with open(self.filename, 'w') as f:
+     def write(self,filename):
+          with open(filename, 'w') as f:
                f.write(self.content)
           return
      def load_template(self, template_filename):
@@ -61,9 +60,9 @@ class RestartFile(GCFile):
           return
 
 if __name__=='__main__':
-     i = GCFile('testinputfile')
+     i = GCFile()
      i.load_template('input.template')
      i.set_value('@EMISFILEPATH','new/emis/path')
-     i.write()
+     i.write('testinputfile')
 
      
