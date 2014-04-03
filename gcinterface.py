@@ -16,6 +16,9 @@ class GCFile(object):
                self.content = f.read()
           return
      def set_value(self, tag, value):
+          # put @tags in the template to replace with value using this function
+          if not tag.startswith('@'):
+               tag = '@'+tag
           self.content = self.content.replace(tag, value)
           return
 
