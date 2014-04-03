@@ -1,22 +1,25 @@
 # rough sketch of functionality
 
-
 import os, shutil
 #from gchem import gchem
 
-class GCFileObj(object):
+class GCFile(object):
      def __init__(self, filename):
           self.filename = filename
-
-class InputGeos(GCFileObj):
+          self.content = ''
      def write(self,):
-          # self.filename is set
           with open(self.filename, 'w') as f:
-               f.write(self.template)
+               f.write(self.content)
           return
      def load_template(self, template_filename):
-          self.template = open(template_filename, 'r').read()
+          with open(template_filename, 'r') as f:
+               self.content = f.read()
           return
+     def set_value(self, tag, value):
+          self.content = self.content.replace(tag, value)
+          return
+
+class InputGeos(GCFile):
      def set_dates(self, run_start_date, run_end_date):
           self.template = self.template.replace('@STARTDATE', run_start_date)
           self.template = self.template.replace('@ENDDATE', run_end_date)
@@ -37,15 +40,13 @@ class RunDir(object):
           shutil.copy( os.path.join( origin, destination ) )
           return
 
-class EmisFile(GCFileObj):
+class EmisFile(GCFile):
      def scale_emissions(self,):
           return
      def convert_emis_format(self,):
           return
-     def write(self, ):
-          return
      
-class RestartFile(GCFileObj):
+class RestartFile(GCFile):
      def init_from_prior(self,):
           return
      def scale_tracers(self,):
@@ -54,14 +55,11 @@ class RestartFile(GCFileObj):
           return
      def remove_tracer(self,):
           return
-     def write(self,):
-          # write at self.filename
-          return
 
 if __name__=='__main__':
-     i = InputGeos('testinputfile')
+     i = GCFile('testinputfile')
      i.load_template('input.template')
-     i.set_emis('new/emis/path')
+     i.set_value('@EMISFILEPATH','new/emis/path')
      i.write()
 
      
