@@ -21,6 +21,11 @@ class GCFile(object):
                tag = '@'+tag
           self.content = self.content.replace(tag, value)
           return
+     def set_values(self, dictionary):
+          # dictionary of paramtag:value pairs
+          for param in dictionary:
+               self.content = self.content.replace('@'+param,dictionary[param])
+          return
 
 class InputGeos(GCFile):
      def set_dates(self, run_start_date, run_end_date):
@@ -29,10 +34,6 @@ class InputGeos(GCFile):
           return
      def set_emis(self, emis_filename):
           self.template = self.template.replace('@EMISFILEPATH', emis_filename)
-          return
-     def set_params(self, params):
-          for param in params:
-               self.template = self.template.replace('@'+param, params[param])
           return
 
 class RunDir(object):
